@@ -15,9 +15,16 @@ exporters:
   debug/detailed:
     verbosity: detailed
 
+processors:
+  filter:
+    error_mode: ignore
+    metrics:
+      metric:
+        - 'IsMatch(metric.name, "coffeeshop.*") == false'
+
 service:
   pipelines:
     metrics/debug:
       receivers: [otlp]
-      processors: []
+      processors: [filter]
       exporters: [debug/detailed]
