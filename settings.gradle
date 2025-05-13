@@ -1,1 +1,3 @@
 rootProject.name = 'daq-sample'
+
+include 'server'

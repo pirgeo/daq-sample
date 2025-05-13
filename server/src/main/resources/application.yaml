@@ -1,0 +1,20 @@
+spring.application.name: daq-sample
+otel:
+  exporter:
+    otlp:
+      metrics:
+        temporality:
+          preference: DELTA
+
+  metric:
+    export:
+      # Defines how often metrics are published to the backend.
+      interval: 5000
+
+  traces:
+    exporter: none
+  logs:
+    exporter: none
+  metrics:
+    exemplar:
+      filter: ALWAYS_OFF
