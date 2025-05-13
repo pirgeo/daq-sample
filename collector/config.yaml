@@ -22,9 +22,16 @@ processors:
       metric:
         - 'IsMatch(metric.name, "coffeeshop.*") == false'
 
+  transform:
+    error_mode: ignore
+    metric_statements:
+      - delete_key(resource.attributes, "process.command_args")
+      - replace_pattern(datapoint.attributes["customer_email"], "[^@]+(@.+)", "redacted$$1")
+      - set(metric.description, "The number of beverages ordered") where metric.name == "coffeeshop.beverages_ordered"
+
 service:
   pipelines:
     metrics/debug:
       receivers: [otlp]
-      processors: [filter]
+      processors: [filter, transform]
       exporters: [debug/detailed]
